@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-onBackground);
+  font-family: var(--font-family-base, 'Inter', sans-serif);
+  font-size: 1rem;
+  line-height: var(--font-body-medium-line-height);
+  letter-spacing: var(--font-body-medium-letter-spacing);
+  font-weight: var(--font-body-medium-font-weight);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] {
+  --color-background: hsl(240, 10%, 8%);
+  --color-onBackground: hsl(0, 0%, 93%);
+  --color-surface: hsl(240, 8%, 12%);
+  --color-onSurface: hsl(0, 0%, 93%);
+  --color-surfaceVariant: hsl(240, 6%, 18%);
+  --color-onSurfaceVariant: hsl(0, 0%, 70%);
+  --color-outlineVariant: hsl(240, 4%, 25%);
+  --color-inverseSurface: hsl(240, 4%, 25%);
+  --color-onPrimary: hsl(240, 10%, 8%);
+  --color-primaryContainer: hsl(25, 95%, 38%);
+  --color-onPrimaryContainer: hsl(21, 100%, 88%);
+  --color-errorContainer: hsl(0, 60%, 30%);
+  --color-onErrorContainer: hsl(7, 100%, 90%);
+  --color-surfaceContainerLow: hsl(240, 8%, 14%);
+  --color-surfaceContainerHighest: hsl(240, 6%, 22%);
+}
+
+[data-theme="dark"] body {
+  background: var(--color-background);
+  color: var(--color-onBackground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-primaryContainer);
+  color: var(--color-onPrimaryContainer);
+}

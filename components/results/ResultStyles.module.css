@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-family: var(--font-title-medium-font-family);
+  font-size: var(--font-title-medium-font-size);
+  font-weight: var(--font-title-medium-font-weight);
+  color: var(--color-primary);
+  margin-top: 16px;
+}
+
+.title:first-child {
+  margin-top: 0;
+}
+
+.paragraph {
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  line-height: var(--font-body-medium-line-height);
+  color: var(--color-onSurface);
+}
+
+.list {
+  list-style-type: disc;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listItem {
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurface);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background-color: hsl(285, 100%, 99%);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.badge {
+  align-self: flex-start;
+  background-color: var(--color-secondaryContainer);
+  color: var(--color-onSecondaryContainer);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: var(--font-label-small-font-family);
+  font-size: var(--font-label-small-font-size);
+  font-weight: var(--font-label-small-font-weight);
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-family: var(--font-title-small-font-family);
+  font-size: var(--font-title-small-font-size);
+  font-weight: var(--font-title-small-font-weight);
+  color: var(--color-onSurface);
+}
+
+.cardText {
+  font-family: var(--font-body-small-font-family);
+  font-size: var(--font-body-small-font-size);
+  color: var(--color-onSurfaceVariant);
+}
+
+.clickableItem {
+  background: none;
+  border: none;
+  padding: 4px 0;
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurface);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: color 0.15s ease;
+}
+
+.clickableItem:hover {
+  color: var(--color-primary);
+}
+
+.clickableCard {
+  background-color: hsl(285, 100%, 99%);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+}
+
+.clickableCard:hover {
+  border-color: var(--color-primary);
+  background-color: hsl(285, 80%, 97%);
+}

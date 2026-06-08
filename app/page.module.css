@@ -1,0 +1,73 @@
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-background);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero {
+  max-width: 720px;
+  text-align: center;
+}
+
+.appName {
+  font-family: var(--font-title-medium-font-family);
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: var(--font-title-medium-font-weight);
+  color: var(--color-primary);
+  margin-bottom: 8px;
+  letter-spacing: var(--font-title-medium-letter-spacing);
+  line-height: var(--font-title-medium-line-height);
+}
+
+.heroTitle {
+  font-family: var(--font-display-large-font-family);
+  font-size: clamp(28px, 6vw, 62px);
+  font-weight: var(--font-display-large-font-weight);
+  color: var(--color-onSurface);
+  margin-bottom: 16px;
+  letter-spacing: var(--font-display-large-letter-spacing);
+  line-height: 1.2;
+}
+
+.highlight {
+  color: var(--color-primary);
+}
+
+.subtitle {
+  font-family: var(--font-body-large-font-family);
+  font-size: var(--font-body-large-font-size);
+  color: var(--color-onSurfaceVariant);
+  margin-bottom: 48px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.cta {
+  padding: 12px 20px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 24px 16px;
+  }
+}

@@ -1,0 +1,52 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: var(--color-onPrimary);
+}
+
+.logo {
+  font-family: var(--font-title-small-font-family);
+  font-size: var(--font-title-small-font-size);
+  font-weight: var(--font-title-small-font-weight);
+  letter-spacing: var(--font-title-small-letter-spacing);
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-bottom: 0;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.title {
+  font-family: var(--font-headline-small-font-family);
+  font-size: var(--font-headline-small-font-size);
+  font-weight: var(--font-headline-small-font-weight);
+  line-height: 1.2;
+  color: var(--color-onSurface);
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurfaceVariant);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 8px 16px;
+  }
+}

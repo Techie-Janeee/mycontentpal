@@ -1,0 +1,164 @@
+.wrapper {
+  position: relative;
+}
+
+.navBtn {
+  font-family: var(--font-label-large-font-family);
+  font-size: var(--font-label-large-font-size);
+  font-weight: var(--font-label-large-font-weight);
+  color: var(--color-onSurface);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.navBtn:hover {
+  color: var(--color-primary);
+}
+
+.navBtnActive {
+  color: hsl(25, 95%, 53%);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background-color: hsl(285, 100%, 99%);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 4px;
+  z-index: 50;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.dropdownItem:hover {
+  background-color: var(--color-surfaceVariant);
+}
+
+.dropdownItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurface);
+}
+
+.toggle {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: var(--color-outlineVariant);
+  position: relative;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toggleOn {
+  background-color: var(--color-primary);
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-onPrimary);
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.toggleOn .toggleKnob {
+  transform: translateX(18px);
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-outlineVariant);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.modalText {
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurface);
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+}
+
+.modalCancel {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--color-outlineVariant);
+  background-color: var(--color-surface);
+  color: var(--color-onSurface);
+  font-family: var(--font-label-large-font-family);
+  font-size: var(--font-label-large-font-size);
+  font-weight: var(--font-label-large-font-weight);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modalCancel:hover {
+  background-color: var(--color-surfaceVariant);
+}
+
+.modalConfirm {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-onPrimary);
+  font-family: var(--font-label-large-font-family);
+  font-size: var(--font-label-large-font-size);
+  font-weight: var(--font-label-large-font-weight);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modalConfirm:hover {
+  background-color: var(--color-primaryContainer);
+  color: var(--color-onPrimaryContainer);
+}

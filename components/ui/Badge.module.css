@@ -1,0 +1,21 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: var(--font-label-small-font-family);
+  font-size: var(--font-label-small-font-size);
+  font-weight: var(--font-label-small-font-weight);
+  text-transform: uppercase;
+}
+
+.primary {
+  background-color: var(--color-primaryContainer);
+  color: var(--color-onPrimaryContainer);
+}
+
+.secondary {
+  background-color: var(--color-secondaryContainer);
+  color: var(--color-onSecondaryContainer);
+}

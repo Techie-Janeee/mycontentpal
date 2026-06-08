@@ -1,0 +1,81 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.error {
+  color: var(--color-error);
+  font-family: var(--font-body-small-font-family);
+  font-size: var(--font-body-small-font-size);
+  text-align: center;
+  padding: 8px;
+  background-color: color-mix(in srgb, var(--color-errorContainer) 70%, transparent);
+  border-radius: 8px;
+}
+
+.eyeButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-onSurfaceVariant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.eyeButton:hover {
+  color: var(--color-onSurface);
+}
+
+.forgotLink {
+  font-family: var(--font-body-small-font-family);
+  font-size: var(--font-body-small-font-size);
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: -16px;
+  align-self: flex-start;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: -16px;
+}
+
+.requirement {
+  font-family: var(--font-body-small-font-family);
+  font-size: var(--font-body-small-font-size);
+  color: var(--color-onSurfaceVariant);
+}
+
+.footer {
+  text-align: center;
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurfaceVariant);
+  margin-top: 8px;
+}
+
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

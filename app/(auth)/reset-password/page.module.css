@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  text-align: center;
+  font-family: var(--font-body-medium-font-family);
+  font-size: var(--font-body-medium-font-size);
+  color: var(--color-onSurface);
+}
+
+.backLink {
+  color: var(--color-primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  text-align: center;
+}
