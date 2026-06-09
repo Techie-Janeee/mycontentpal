@@ -54,7 +54,7 @@ export function buildPrompt(input: GenerateInput) {
   userPrompt.push("CRITICAL REQUIREMENTS:");
   userPrompt.push("- Base EVERY part of your response on the niche, platform, and description above.");
   userPrompt.push("- Do NOT give generic advice that could apply to any account.");
-  userPrompt.push("- Reference real ${platform} content formats and trends where relevant.");
+  userPrompt.push(`- Reference real ${platform} content formats and trends where relevant.`);
   userPrompt.push("- Every item must feel tailored to THIS specific user.");
   userPrompt.push("- Output the JSON only, no greetings, no explanations outside the JSON.");
 
@@ -86,7 +86,7 @@ export function buildPrompt(input: GenerateInput) {
       userPrompt.push("- ideas array must contain exactly 5 items.");
       userPrompt.push("- Each hook must be a real, postable hook tailored to my niche, not generic.");
       userPrompt.push("- Each caption must be 2-3 sentences of actual content, not placeholders.");
-      userPrompt.push("- Format must specify the actual ${platform} content type (e.g. Reel, Carousel, Trend, Story).");
+      userPrompt.push(`- Format must specify the actual ${platform} content type (e.g. Reel, Carousel, Trend, Story).`);
       break;
     case "strategy-recommendation":
       expectedFormat = [
@@ -99,7 +99,7 @@ export function buildPrompt(input: GenerateInput) {
       ].join("\n");
       userPrompt.push("- actions array must contain exactly 3 items, prioritised 1 (most important) to 3.");
       userPrompt.push("- Each action must be something I can literally do this week, not vague strategy.");
-      userPrompt.push("- The reason must explain why this specifically helps a ${niche} creator on ${platform}.");
+      userPrompt.push(`- The reason must explain why this specifically helps a ${niche} creator on ${platform}.`);
       break;
     case "competitor-insights":
       expectedFormat = [
@@ -111,7 +111,7 @@ export function buildPrompt(input: GenerateInput) {
         `}`,
       ].join("\n");
       userPrompt.push("- patterns array must contain 3-5 items.");
-      userPrompt.push("- Each pattern must be specific to the ${niche} niche on ${platform}.");
+      userPrompt.push(`- Each pattern must be specific to the ${niche} niche on ${platform}.`);
       userPrompt.push("- Each takeaway must be actionable for a beginner creator, not abstract.");
       break;
   }

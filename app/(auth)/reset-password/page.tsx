@@ -17,6 +17,14 @@ function ResetPasswordForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
+  const passwordRequirements = [
+    { key: "uppercase", label: "Must contain an uppercase letter", check: (v: string) => /[A-Z]/.test(v) },
+    { key: "lowercase", label: "Must contain a lowercase letter", check: (v: string) => /[a-z]/.test(v) },
+    { key: "number", label: "Must contain a number", check: (v: string) => /[0-9]/.test(v) },
+    { key: "minLength", label: "Must be at least 8 characters", check: (v: string) => v.length >= 8 },
+  ] as const;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,8 +40,9 @@ function ResetPasswordForm() {
       return;
     }
 
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+    const unmet = passwordRequirements.find((r) => !r.check(password));
+    if (unmet) {
+      setError(unmet.label);
       return;
     }
 
@@ -85,16 +94,23 @@ function ResetPasswordForm() {
           label="New Password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => { setPassword(e.target.value); if (error) setError(""); }}
+          onFocus={() => { if (error) setError(""); setPasswordFocus(true); }}
+          onBlur={() => setPasswordFocus(false)}
           error={error}
           required
           autoFocus
         />
+        {password && !isLoading && passwordRequirements.find((r) => !r.check(password)) && (
+          <div style={{ fontFamily: "var(--font-body-small-font-family)", fontSize: "var(--font-body-small-font-size)", color: "var(--color-onSurfaceVariant)", marginTop: -16 }}>
+            {passwordRequirements.find((r) => !r.check(password))?.label}
+          </div>
+        )}
         <Input
           label="Confirm Password"
           type="password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => { setConfirmPassword(e.target.value); if (error) setError(""); }}
           required
         />
         <Button type="submit" fullWidth disabled={isLoading}>

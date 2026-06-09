@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Platform, Action } from "@/types";
 
 export const passwordSchema = z
   .string()

@@ -82,9 +82,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ result: "success", needsVerification: true }, { status: 201 });
   } catch (error) {
     console.error("[AUTH ERROR]", error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    const message = error instanceof Error && error.message.includes("SMTP")
+      ? "Failed to send verification email. Please try again."
+      : "Something went wrong";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -79,7 +79,7 @@ export function ChatPanel({ outputData, niche, platform, showChatMobile, onShowC
       sendMessage(pendingMessage);
       onPendingMessageConsumed();
     }
-  }, [pendingMessage]);
+  }, [pendingMessage, sendMessage]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });

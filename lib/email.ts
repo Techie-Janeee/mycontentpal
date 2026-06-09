@@ -41,15 +41,10 @@ function buildEmailHtml(body: string, link: string, label: string) {
 async function sendEmail(to: string, subject: string, html: string) {
   const transporter = createTransporter();
   if (!transporter) {
-    console.warn("[EMAIL] SMTP not configured — email not sent");
-    return;
+    throw new Error("SMTP not configured");
   }
-  try {
-    const info = await transporter.sendMail({ from: FROM_EMAIL, to, subject, html });
-    console.log("[EMAIL] Sent:", info.messageId);
-  } catch (error) {
-    console.error("[EMAIL ERROR]", error);
-  }
+  const info = await transporter.sendMail({ from: FROM_EMAIL, to, subject, html });
+  console.log("[EMAIL] Sent:", info.messageId);
 }
 
 export async function sendVerificationEmail(email: string, token: string) {

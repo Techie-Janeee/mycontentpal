@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { validateRequestOrigin } from "@/lib/csrf";
+import { authRatelimit } from "@/lib/ratelimit";
+import { audit } from "@/lib/audit";
 
 const VerifySchema = z.object({
   token: z.string().min(1),
@@ -10,6 +12,13 @@ const VerifySchema = z.object({
 export async function POST(req: NextRequest) {
   const originCheck = validateRequestOrigin(req);
   if (originCheck !== true) return originCheck;
+
+  const ip = req.headers.get("x-forwarded-for") ?? "unknown";
+  const { success: allowed } = await authRatelimit.limit(ip);
+  if (!allowed) {
+    audit("rate-limit.exceeded", { route: "verify-email", ip });
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
 
   try {
     const body = await req.json();
