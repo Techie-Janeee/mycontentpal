@@ -2,6 +2,7 @@ type AuditEvent =
   | "register.attempt"
   | "register.success"
   | "register.failure"
+  | "register.resend"
   | "login.success"
   | "login.failure"
   | "forgot-password.request"

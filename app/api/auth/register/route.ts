@@ -47,6 +47,16 @@ export async function POST(req: NextRequest) {
     });
 
     if (existingUser) {
+      if (!existingUser.emailVerified) {
+        const { token: verificationToken, expiry: verificationTokenExpiry } = generateEmailToken();
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: { verificationToken, verificationTokenExpiry },
+        });
+        await sendVerificationEmail(email, verificationToken);
+        audit("register.resend", { email });
+        return NextResponse.json({ result: "success", needsVerification: true }, { status: 200 });
+      }
       audit("register.failure", { email, reason: "email_exists", ip });
       return NextResponse.json(
         { error: "Email already in use" },

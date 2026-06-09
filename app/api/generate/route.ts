@@ -27,6 +27,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
+  const todayStart = new Date();
+  todayStart.setUTCHours(0, 0, 0, 0);
+
+  const generationsToday = await prisma.contentSession.count({
+    where: { userId, createdAt: { gte: todayStart } },
+  });
+
+  if (generationsToday >= 12) {
+    return NextResponse.json(
+      { error: "Daily generation limit reached. You can generate up to 12 times per day." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const parsed = GenerateInputSchema.safeParse(body);

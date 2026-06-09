@@ -28,6 +28,7 @@ function AuthForm() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [notVerifiedEmail, setNotVerifiedEmail] = useState("");
   const [passwordFocus, setPasswordFocus] = useState(false);
 
   const passwordRequirements = [
@@ -81,7 +82,8 @@ function AuthForm() {
         });
 
         if (res?.error === "Email not verified") {
-          setError("Please verify your email before logging in. Check your inbox.");
+          setError("Please verify your email before logging in.");
+          setNotVerifiedEmail(email);
           setIsLoading(false);
         } else if (res?.error) {
           setError("Invalid email or password");
@@ -113,9 +115,31 @@ function AuthForm() {
     }
   };
 
+  const resendVerification = async () => {
+    setError("");
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: notVerifiedEmail, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSignedUpEmail(notVerifiedEmail);
+      } else {
+        setError(data.error || "Failed to resend");
+      }
+    } catch {
+      setError("Something went wrong");
+    }
+    setIsLoading(false);
+  };
+
   const switchMode = () => {
     setMode(isLogin ? "signup" : "login");
     setError("");
+    setNotVerifiedEmail("");
   };
 
   if (signedUpEmail) {
@@ -223,7 +247,21 @@ function AuthForm() {
             required
           />
         )}
-        {error && <div className={styles.error}>{error}</div>}
+        {error && (
+          <div className={styles.error}>
+            {error}
+            {notVerifiedEmail && (
+              <button
+                type="button"
+                onClick={resendVerification}
+                className={styles.resendBtn}
+                disabled={isLoading}
+              >
+                {isLoading ? "Sending..." : "Resend verification email"}
+              </button>
+            )}
+          </div>
+        )}
         <Button type="submit" fullWidth disabled={isLoading}>
           {isLoading
             ? isLogin
