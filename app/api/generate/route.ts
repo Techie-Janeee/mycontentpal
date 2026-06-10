@@ -34,9 +34,9 @@ export async function POST(req: NextRequest) {
     where: { userId, createdAt: { gte: todayStart } },
   });
 
-  if (generationsToday >= 12) {
+  if (generationsToday >= 6) {
     return NextResponse.json(
-      { error: "Daily generation limit reached. You can generate up to 12 times per day." },
+      { error: "Daily generation limit reached. You can generate up to 6 times per day." },
       { status: 429 }
     );
   }

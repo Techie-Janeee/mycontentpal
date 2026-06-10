@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { ratelimit } from "@/lib/ratelimit";
+import { ratelimit, chatDailyRatelimit } from "@/lib/ratelimit";
 import { validateBodySize } from "@/lib/csrf";
 import { audit } from "@/lib/audit";
 import OpenAI from "openai";
@@ -25,6 +25,12 @@ export async function POST(req: NextRequest) {
   if (!allowed) {
     audit("rate-limit.exceeded", { route: "chat", userId });
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
+  const { success: dailyAllowed } = await chatDailyRatelimit.limit(userId);
+  if (!dailyAllowed) {
+    audit("chat.daily-limit.exceeded", { userId });
+    return NextResponse.json({ error: "Daily chat limit reached. You can send up to 25 messages per day." }, { status: 429 });
   }
 
   try {
