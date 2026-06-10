@@ -10,19 +10,37 @@ export function validateBodySize(req: NextRequest): true | NextResponse {
   return true;
 }
 
-export function validateRequestOrigin(req: NextRequest): true | NextResponse {
-  const origin = req.headers.get("origin");
-  const referer = req.headers.get("referer");
-  const allowedOrigin = process.env.NEXTAUTH_URL || "http://localhost:3000";
+const ALLOWED_ORIGINS = new Set<string>();
 
-  if (origin) {
-    if (origin === allowedOrigin) return true;
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+function getAllowedOrigins(): Set<string> {
+  if (ALLOWED_ORIGINS.size > 0) return ALLOWED_ORIGINS;
+
+  const origins = [
+    process.env.NEXTAUTH_URL,
+    process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
+    process.env.VERCEL_BRANCH_URL && `https://${process.env.VERCEL_BRANCH_URL}`,
+    "http://localhost:3000",
+  ].filter(Boolean) as string[];
+
+  for (const origin of origins) {
+    ALLOWED_ORIGINS.add(origin.replace(/\/$/, ""));
   }
 
+  return ALLOWED_ORIGINS;
+}
+
+export function validateRequestOrigin(req: NextRequest): true | NextResponse {
+  const allowedOrigins = getAllowedOrigins();
+
+  const origin = req.headers.get("origin")?.replace(/\/$/, "");
+  const referer = req.headers.get("referer")?.replace(/\/$/, "");
+
+  if (origin && allowedOrigins.has(origin)) return true;
+
   if (referer) {
-    if (referer.startsWith(allowedOrigin)) return true;
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    for (const allowed of allowedOrigins) {
+      if (referer.startsWith(allowed)) return true;
+    }
   }
 
   return NextResponse.json({ error: "Forbidden" }, { status: 403 });
