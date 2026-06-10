@@ -51,8 +51,8 @@ function VerifyEmailForm() {
           <p style={{ color: "var(--color-onSurfaceVariant)", marginBottom: 24 }}>
             {message}
           </p>
-          <Button fullWidth onClick={() => router.push("/auth")}>
-            Log in
+          <Button fullWidth onClick={() => router.push("/onboarding")}>
+            Continue
           </Button>
         </div>
       )}
