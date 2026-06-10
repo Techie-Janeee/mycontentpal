@@ -11,6 +11,7 @@ type AuditEvent =
   | "generate.success"
   | "generate.failure"
   | "chat.error"
+  | "chat.daily-limit.exceeded"
   | "rate-limit.exceeded"
   | "csrf.blocked"
   | "body-too-large";
