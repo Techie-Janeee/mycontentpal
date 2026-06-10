@@ -1,3 +1,7 @@
+:root {
+  --font-family-base: 'Inter', sans-serif;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

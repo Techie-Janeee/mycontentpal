@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
           select: { tokenVersion: true },
         });
         if (!dbUser || dbUser.tokenVersion !== (token.tokenVersion as number)) {
-          return {};
+          return { ...token, id: "", tokenVersion: 0 };
         }
       }
 
