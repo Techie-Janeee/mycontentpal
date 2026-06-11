@@ -85,6 +85,21 @@ export function ChatPanel({ outputData, niche, platform, showChatMobile, onShowC
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const panel = document.querySelector(`.${styles.right}`) as HTMLElement;
+    if (!panel) return;
+
+    const onResize = () => {
+      panel.style.height = `${vv.height}px`;
+    };
+
+    vv.addEventListener("resize", onResize);
+    return () => vv.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div className={`${styles.right} ${showChatMobile ? styles.rightVisible : ""}`}>
       <div className={styles.chatPanel}>
