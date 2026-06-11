@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { sessionRatelimit } from "@/lib/ratelimit";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const ip = req.headers.get("x-forwarded-for") ?? "unknown";
+  const { success: allowed } = await sessionRatelimit.limit(ip);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Slow down." },
+      { status: 429 }
+    );
   }
 
   try {
