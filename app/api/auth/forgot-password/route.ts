@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import crypto from "crypto";
 import { prisma } from "@/lib/db";
-import { sendPasswordResetEmail } from "@/lib/email";
+import { sendPasswordResetEmail, hashToken } from "@/lib/email";
 import { validateRequestOrigin, validateBodySize } from "@/lib/csrf";
 import { authRatelimit } from "@/lib/ratelimit";
 import { audit } from "@/lib/audit";
@@ -44,12 +44,13 @@ export async function POST(req: NextRequest) {
 
     if (user) {
       const token = crypto.randomBytes(32).toString("hex");
+      const hashed = hashToken(token);
       const expiry = new Date(Date.now() + 60 * 60 * 1000);
 
       await prisma.user.update({
         where: { id: user.id },
         data: {
-          resetToken: token,
+          resetToken: hashed,
           resetTokenExpiry: expiry,
         },
       });

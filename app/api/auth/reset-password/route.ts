@@ -6,6 +6,7 @@ import { passwordSchema } from "@/lib/validation";
 import { validateRequestOrigin, validateBodySize } from "@/lib/csrf";
 import { authRatelimit } from "@/lib/ratelimit";
 import { audit } from "@/lib/audit";
+import { hashToken } from "@/lib/email";
 
 const ResetPasswordSchema = z.object({
   token: z.string().min(1),
@@ -38,9 +39,10 @@ export async function POST(req: NextRequest) {
     }
 
     const { token, password } = parsed.data;
+    const hashed = hashToken(token);
 
     const user = await prisma.user.findUnique({
-      where: { resetToken: token },
+      where: { resetToken: hashed },
     });
 
     if (!user || !user.resetTokenExpiry) {

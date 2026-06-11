@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { validateRequestOrigin } from "@/lib/csrf";
 import { authRatelimit } from "@/lib/ratelimit";
 import { audit } from "@/lib/audit";
+import { hashToken } from "@/lib/email";
 
 const VerifySchema = z.object({
   token: z.string().min(1),
@@ -29,9 +30,10 @@ export async function POST(req: NextRequest) {
     }
 
     const { token } = parsed.data;
+    const hashed = hashToken(token);
 
     const user = await prisma.user.findUnique({
-      where: { verificationToken: token },
+      where: { verificationToken: hashed },
     });
 
     if (!user || !user.verificationTokenExpiry) {

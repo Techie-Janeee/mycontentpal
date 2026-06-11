@@ -24,6 +24,10 @@ export function generateEmailToken(): { token: string; expiry: Date } {
   };
 }
 
+export function hashToken(token: string): string {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
+
 function buildEmailHtml(body: string, link: string, label: string) {
   return [
     `<div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">`,

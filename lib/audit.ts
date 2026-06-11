@@ -16,11 +16,26 @@ type AuditEvent =
   | "csrf.blocked"
   | "body-too-large";
 
+function maskSensitive(meta?: Record<string, unknown>): Record<string, unknown> {
+  if (!meta) return {};
+  const masked = { ...meta };
+  if (typeof masked.email === "string") {
+    const [name, domain] = masked.email.split("@");
+    masked.email = name
+      ? `${name[0]}***@${domain}`
+      : "***";
+  }
+  if (typeof masked.ip === "string") {
+    masked.ip = masked.ip.split(".").slice(0, 2).join(".") + ".xxx.xxx";
+  }
+  return masked;
+}
+
 export function audit(event: AuditEvent, meta?: Record<string, unknown>) {
   const entry = JSON.stringify({
     ts: new Date().toISOString(),
     event,
-    ...meta,
+    ...maskSensitive(meta),
   });
 
   if (

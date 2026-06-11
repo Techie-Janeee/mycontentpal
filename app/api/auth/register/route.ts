@@ -6,7 +6,7 @@ import { passwordSchema } from "@/lib/validation";
 import { validateRequestOrigin, validateBodySize } from "@/lib/csrf";
 import { authRatelimit } from "@/lib/ratelimit";
 import { audit } from "@/lib/audit";
-import { sendVerificationEmail, generateEmailToken } from "@/lib/email";
+import { sendVerificationEmail, generateEmailToken, hashToken } from "@/lib/email";
 
 const RegisterSchema = z.object({
   email: z.string().email(),
@@ -48,12 +48,13 @@ export async function POST(req: NextRequest) {
 
     if (existingUser) {
       if (!existingUser.emailVerified) {
-        const { token: verificationToken, expiry: verificationTokenExpiry } = generateEmailToken();
+        const { token, expiry: verificationTokenExpiry } = generateEmailToken();
+        const verificationToken = hashToken(token);
         await prisma.user.update({
           where: { id: existingUser.id },
           data: { verificationToken, verificationTokenExpiry },
         });
-        await sendVerificationEmail(email, verificationToken);
+        await sendVerificationEmail(email, token);
         audit("register.resend", { email });
         return NextResponse.json({ result: "success", needsVerification: true }, { status: 200 });
       }
@@ -65,7 +66,8 @@ export async function POST(req: NextRequest) {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    const { token: verificationToken, expiry: verificationTokenExpiry } = generateEmailToken();
+    const { token, expiry: verificationTokenExpiry } = generateEmailToken();
+    const verificationToken = hashToken(token);
 
     await prisma.user.create({
       data: {
@@ -76,7 +78,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    await sendVerificationEmail(email, verificationToken);
+    await sendVerificationEmail(email, token);
 
     audit("register.success", { email });
     return NextResponse.json({ result: "success", needsVerification: true }, { status: 201 });
